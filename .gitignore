@@ -19,3 +19,5 @@
 /GamesApi.Rawg.Services/obj
 /GamesApi.Rawg.Services.Abstracts/bin/Debug/net6.0
 /GamesApi.Rawg.Services.Abstracts/obj
+/GamesApi.UsersRepository/bin/Debug/net6.0
+/GamesApi.UsersRepository/obj

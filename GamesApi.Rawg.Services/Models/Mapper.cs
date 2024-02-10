@@ -9,6 +9,8 @@ namespace GamesApi.Rawg.Services.Models
         {
             CreateMap<Game, Core.Game>()
                 .ForMember(dest => dest.GameId, opt => opt.MapFrom(src => src.Id));
+
+            CreateMap<User, Core.User>();
         }
     }
 }

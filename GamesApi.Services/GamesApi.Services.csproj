@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\GamesApi.UsersRepository.Abstracts\GamesApi.UsersRepository.Abstracts.csproj" />
     <ProjectReference Include="..\GamesApi.Domain\GamesApi.Domain.csproj" />
     <ProjectReference Include="..\GamesApi.Rawg.Services.Abstracts\GamesApi.Rawg.Services.Abstracts.csproj" />
     <ProjectReference Include="..\GamesApi.Services.Abstracts\GamesApi.Services.Abstracts.csproj" />

@@ -14,9 +14,9 @@ namespace GamesApi.Rawg.Services
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly RAWGSettings _rawgSettings;
-        private readonly IMapper _mapper;      
+        private readonly IMapper _mapper;
 
-        private readonly Func<string?, string?, string, string?, string> _gamesUrl = (baseUrl, key, query, ordering) => 
+        private readonly Func<string?, string?, string, string?, string> _gamesUrl = (baseUrl, key, query, ordering) =>
             string.IsNullOrEmpty(ordering)
             ? $"{baseUrl}api/games?key={key}&search={HttpUtility.UrlEncode(query)}"
             : $"{baseUrl}api/games?key={key}&search={HttpUtility.UrlEncode(query)}&ordering={HttpUtility.UrlEncode(ordering)}";
@@ -30,6 +30,7 @@ namespace GamesApi.Rawg.Services
             _mapper = mapper;
         }
 
+        /// <inheritdoc cref="IRawgApiService.GetGamesAsync" />
         public async Task<IEnumerable<Core.Game>> GetGamesAsync(string query, string? ordering)
         {
             ArgumentNullException.ThrowIfNull(query);
@@ -38,11 +39,11 @@ namespace GamesApi.Rawg.Services
 
             var url = _gamesUrl(_rawgSettings.BaseUrl, _rawgSettings.RawgApiKey, query, ordering);
 
-            HttpResponseMessage rawgGamesResponse = await httpClient.GetAsync(new Uri(url));
+            HttpResponseMessage response = await httpClient.GetAsync(new Uri(url));
 
-            rawgGamesResponse.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
 
-            string content = await rawgGamesResponse.Content.ReadAsStringAsync();
+            string content = await response.Content.ReadAsStringAsync();
 
             GamesResponse gamesResponse = JsonConvert.DeserializeObject<GamesResponse>(content);
 
@@ -50,5 +51,30 @@ namespace GamesApi.Rawg.Services
 
             return games;
         }
+
+        /// <inheritdoc cref="IRawgApiService.GetGamesAsync" />
+        public async Task<Core.Game> GetGameByIdAsync(int gameId)
+        {
+
+            var httpClient = _httpClientFactory.CreateClient(SettingsContants.RawgHttClientName);
+
+            var url = $"{_rawgSettings.BaseUrl}api/games/{gameId}";
+
+            HttpResponseMessage response = await httpClient.GetAsync(new Uri(url));
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            };
+
+            string content = await response.Content.ReadAsStringAsync();
+
+            Game rawgGame = JsonConvert.DeserializeObject<Game>(content);
+
+            var game = _mapper.Map<Core.Game>(rawgGame);
+
+            return game;
+        }
+
     }
 }

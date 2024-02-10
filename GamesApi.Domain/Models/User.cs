@@ -11,7 +11,7 @@ namespace Games.Core.Models
         [JsonPropertyName("userId")]
         public int UserId { get; set; }
 
-        public List<Game> Games { get; set; } = default!;
+        public IEnumerable<Game> Games { get; set; } = default!;
 
     }
 }

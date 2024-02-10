@@ -3,6 +3,7 @@ using Games.Domain.Models.Configuration;
 using Games.Services;
 using GamesApi.Domain.Constants;
 using GamesApi.Rawg.Services;
+using GamesApi.UsersRepository;
 using Polly;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +32,7 @@ builder.Services.AddHttpClient(SettingsContants.RawgHttClientName, client =>
 
 BusinessServicesConnector.Configure(builder.Services);
 RawgServicesConnector.Configure(builder.Services);
+RepositoryConnectors.Configure(builder.Services);
 
 builder.Services.Configure<RAWGSettings>(builder.Configuration.GetSection(nameof(RAWGSettings)));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

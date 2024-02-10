@@ -8,11 +8,19 @@ namespace GamesApi.Rawg.Services.Abstracts
     public interface IRawgApiService
     {
         /// <summary>
-        /// Get all games suing filter and ordering parameter
+        /// Get all games using filter and ordering parameter
         /// </summary>
         /// <param name="query"></param>
         /// <param name="ordering"></param>
-        /// <returns>A collection of Games"/></returns>
-        Task<IEnumerable<Game>> GetGamesAsync(string query, string ordering);             
+        /// <returns>A <see cref="IEnumerable{Game}"/>"/></returns>
+        Task<IEnumerable<Game>> GetGamesAsync(string query, string ordering);
+
+        /// <summary>
+        /// Get a game given the id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="ordering"></param>
+        /// <returns>a <see cref="Game"/>"/></returns>
+        Task<Game> GetGameByIdAsync(int gameId);
     }
 }

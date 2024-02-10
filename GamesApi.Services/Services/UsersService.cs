@@ -1,13 +1,25 @@
 ﻿using Games.Core.Models;
 using Games.Services.Abstracts;
+using GamesApi.UsersRepository.Abstracts;
 
 namespace Games.Services
 {
     internal class UsersService : IUsersService
     {
-        public Task<User> Create()
+        private readonly IUsersRepository _usersRepository;
+
+        public UsersService(IUsersRepository usersRepository)
         {
-            throw new NotImplementedException();
+            _usersRepository = usersRepository;
+        }
+        public User Create()
+        {
+            return _usersRepository.Create();
+        }
+
+        public User GetById(int userId)
+        {
+            return _usersRepository.GetById(userId);
         }
     }
 }
