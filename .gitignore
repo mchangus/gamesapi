@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/gamesapi
+/GamesApi.Domain/bin/Debug/net6.0
+/GamesApi.Domain/obj
+/GamesApi.Services/bin/Debug/net6.0
+/GamesApi.Services/obj
+/GamesApi.Services.Abstracts/bin/Debug/net6.0
+/GamesApi.Services.Abstracts/obj
+/GamesApi.Tests/bin/Debug/net6.0
+/GamesApi.Tests/obj
+/GamesApi.WebApi/.vs
+/GamesApi.WebApi/bin/Debug/net6.0
+/GamesApi.WebApi/obj
+/GamesApi.WebApi/appsettings.Development.json
