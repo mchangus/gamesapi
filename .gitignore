@@ -15,3 +15,7 @@
 /GamesApi.WebApi/bin/Debug/net6.0
 /GamesApi.WebApi/obj
 /GamesApi.WebApi/appsettings.Development.json
+/GamesApi.Rawg.Services/bin/Debug/net6.0
+/GamesApi.Rawg.Services/obj
+/GamesApi.Rawg.Services.Abstracts/bin/Debug/net6.0
+/GamesApi.Rawg.Services.Abstracts/obj

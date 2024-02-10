@@ -3,6 +3,7 @@ using Games.Core.Models;
 using Games.Domain.Models;
 using Games.Domain.Models.Configuration;
 using Games.Domain.Validators;
+using Games.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -14,14 +15,20 @@ namespace Games.Api.Controllers
     {
         private readonly ILogger<GamesController> _logger;
         private readonly RAWGSettings _searchSettings;
-        public GamesController(ILogger<GamesController> logger, IOptions<RAWGSettings> searchSettings)
+
+        private readonly IGamesService _gamesService;
+        public GamesController(ILogger<GamesController> logger, 
+            IOptions<RAWGSettings> searchSettings,
+            IGamesService gameService)
         {
             _logger = logger;
             _searchSettings = searchSettings.Value;
+            _gamesService = gameService;
         }
 
         [HttpGet(Name = "games")]
-        public IActionResult GetGames([FromQuery]Search search)
+        [ProducesResponseType(statusCode:StatusCodes.Status200OK, Type = typeof(IEnumerable<Game>))]        
+        public async Task<IActionResult> GetGames([FromQuery]Search search)
         {
             SearchValidator validator = new(_searchSettings.GameSearchOrderingOptions);
             ValidationResult result = validator.Validate(search);
@@ -31,7 +38,9 @@ namespace Games.Api.Controllers
                 return BadRequest(result.Errors.FirstOrDefault()?.ErrorMessage);
             }
 
-            return  Ok(new Game[0]);
+            IEnumerable<Game> games = await _gamesService.SearchAsync(search);
+
+            return Ok(games);
         }
     }
 }

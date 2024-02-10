@@ -19,7 +19,7 @@ namespace Games.Core.Models
         public int Added { get; set; }
 
         [JsonPropertyName("metacritic")]
-        public int Metacritic { get; set; }
+        public int? Metacritic { get; set; }
 
         [JsonPropertyName("rating")]
         public double Rating { get; set; }

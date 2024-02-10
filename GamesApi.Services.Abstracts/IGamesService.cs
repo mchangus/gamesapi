@@ -3,14 +3,40 @@ using Games.Domain.Models;
 
 namespace Games.Services.Abstracts
 {
+    /// <summary>
+    /// The Game Service Interface
+    /// </summary>
     public interface IGamesService
     {
-        Task<IEnumerable<Game>> Search(Search search);
+        /// <summary>
+        /// Search games base of a serach criteria speficy in parameter
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>A collection of Games</returns>
+        Task<IEnumerable<Game>> SearchAsync(Search search);
 
-        Task AddGameToFavorite(int userId, int gameId);
+        /// <summary>
+        /// Add a game to user's favorites game collection
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        Task AddGameToFavoritesAsync(int userId, int gameId);
 
-        Task RemoveGameFromFavorite(int userId, int gameId);
+        /// <summary>
+        /// Remove a game from the user's favorites game collection
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        Task RemoveGameFromFavoritesAsync(int userId, int gameId);
 
-        Task CompareFavorites(int userId, ComparisonRequest comparisonRequest);
+        /// <summary>
+        /// Compare two users favorite games collection using Comparison defined in parameters
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="comparisonRequest"></param>
+        /// <returns><see cref="ComparisonResponse"/></returns>
+        Task<ComparisonResponse> CompareFavoritesAsync(int userId, ComparisonRequest comparisonRequest);
     }
 }

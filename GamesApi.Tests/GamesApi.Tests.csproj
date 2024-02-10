@@ -28,6 +28,7 @@
     <ProjectReference Include="..\GamesApi.Domain\GamesApi.Domain.csproj" />
     <ProjectReference Include="..\GamesApi.Services.Abstracts\GamesApi.Services.Abstracts.csproj" />
     <ProjectReference Include="..\GamesApi.Services\GamesApi.Services.csproj" />
+    <ProjectReference Include="..\GamesApi.WebApi\GamesApi.WebApi.csproj" />
   </ItemGroup>
 
 </Project>

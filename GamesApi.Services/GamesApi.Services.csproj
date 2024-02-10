@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,7 +8,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GamesApi.Domain\GamesApi.Domain.csproj" />
+    <ProjectReference Include="..\GamesApi.Rawg.Services.Abstracts\GamesApi.Rawg.Services.Abstracts.csproj" />
     <ProjectReference Include="..\GamesApi.Services.Abstracts\GamesApi.Services.Abstracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>GamesApi.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+  
 </Project>

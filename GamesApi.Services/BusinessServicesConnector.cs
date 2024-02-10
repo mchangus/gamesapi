@@ -6,7 +6,7 @@ namespace Games.Services
     /// <summary>
     /// The connector to inject the services into the service collection
     /// </summary>
-    public static class ServicesConnector
+    public static class BusinessServicesConnector
     {
         public static IServiceCollection Configure(IServiceCollection services)
         {

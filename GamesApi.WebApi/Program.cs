@@ -1,5 +1,8 @@
+using AutoMapper;
 using Games.Domain.Models.Configuration;
 using Games.Services;
+using GamesApi.Domain.Constants;
+using GamesApi.Rawg.Services;
 using Polly;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,20 +20,20 @@ builder.Services.AddSwaggerGen();
 
 var baseurl = builder.Configuration.GetValue<string>("RAWGSettings:BaseUrl");
 
-builder.Services.AddHttpClient("RawgClient", client =>
+builder.Services.AddHttpClient(SettingsContants.RawgHttClientName, client =>
 {
-    client.BaseAddress = new Uri(baseurl);
+    client.BaseAddress = new Uri($"https://{baseurl}");
 })
     .AddTransientHttpErrorPolicy(p =>
       p.WaitAndRetryAsync(
         3,
         attempt => TimeSpan.FromMilliseconds(100 * Math.Pow(2, attempt))));
 
-ServicesConnector.Configure(builder.Services);
-
+BusinessServicesConnector.Configure(builder.Services);
+RawgServicesConnector.Configure(builder.Services);
 
 builder.Services.Configure<RAWGSettings>(builder.Configuration.GetSection(nameof(RAWGSettings)));
-
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
