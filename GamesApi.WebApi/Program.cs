@@ -4,7 +4,6 @@ using Games.Services;
 using GamesApi.Domain.Constants;
 using GamesApi.Rawg.Services;
 using GamesApi.UsersRepository;
-using GamesApi.WebApi.Middleware;
 using Polly;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +39,7 @@ BusinessServicesConnector.Configure(builder.Services);
 RawgServicesConnector.Configure(builder.Services);
 RepositoryConnectors.Configure(builder.Services);
 
+
 builder.Services.Configure<RAWGSettings>(builder.Configuration.GetSection(nameof(RAWGSettings)));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -50,7 +50,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseMiddleware<ExceptionLoggingMiddleware>();
 }
 
 app.UseHttpsRedirection();
