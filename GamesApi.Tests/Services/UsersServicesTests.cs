@@ -281,7 +281,7 @@ namespace GamesApi.Tests.Services
         }
 
         [Fact]
-        public void CompareFavorite_ShouldFailWith404_when_SecondaryUser_not_found()
+        public void CompareFavorite_ShouldFailWith400_when_SecondaryUser_not_found()
         {
             // Arrange
             Fixture fix = new Fixture();
@@ -310,6 +310,117 @@ namespace GamesApi.Tests.Services
             // Assert
 
             Assert.Equal(expected.ResponseCode, actual.ResponseCode);
+        }
+
+        [Fact]
+        public void CompareFavorite_Should_return_the_Union_if_comparision_is_union()
+        {
+            // Arrange
+            Fixture fix = new Fixture();
+
+
+            int userId1 = fix.Create<int>();
+            int userId2 = fix.Create<int>();
+            int gameId1 = fix.Create<int>();
+            int gameId2 = fix.Create<int>();
+            int gameId3 = fix.Create<int>();
+
+            ComparisonRequest comparision = fix.Build<ComparisonRequest>()
+                .With(x => x.Comparison, "union")
+                .With(x => x.OtherUserId, userId2)
+                .Create();
+
+            User? user1 = fix.Build<User>()
+                .With(x => x.UserId,userId1)
+                .With(x => x.Games, new HashSet<Game> { new Game { GameId = gameId1 }, new Game { GameId = gameId2 } })
+                .Create();
+            User? user2 = fix.Build<User>()
+                .With(x => x.UserId, userId2)
+                .With(x => x.Games, new HashSet<Game> { new Game { GameId = gameId2 }, new Game { GameId = gameId3 } })
+                .Create();
+
+            _usersRepositoryMock.Setup(x => x.GetById(userId1)).Returns(user1);
+            _usersRepositoryMock.Setup(x => x.GetById(userId2)).Returns(user2);
+
+            // Act
+            var actual = _sut.CompareFavorite(userId1, comparision);
+
+            // Assert
+            Assert.True(actual.GetDataOnSuccess().Games.Count() == 3);
+        }
+
+        [Fact]
+        public void CompareFavorite_Should_return_the_intersection_if_comparision_is_intersection()
+        {
+            // Arrange
+            Fixture fix = new Fixture();
+
+
+            int userId1 = fix.Create<int>();
+            int userId2 = fix.Create<int>();
+            int gameId1 = fix.Create<int>();
+            int gameId2 = fix.Create<int>();
+            int gameId3 = fix.Create<int>();
+
+            ComparisonRequest comparision = fix.Build<ComparisonRequest>()
+                .With(x => x.Comparison, "intersection")
+                .With(x => x.OtherUserId, userId2)
+                .Create();
+
+            User? user1 = fix.Build<User>()
+                .With(x => x.UserId, userId1)
+                .With(x => x.Games, new HashSet<Game> { new Game { GameId = gameId1 }, new Game { GameId = gameId2 } })
+                .Create();
+            User? user2 = fix.Build<User>()
+                .With(x => x.UserId, userId2)
+                .With(x => x.Games, new HashSet<Game> { new Game { GameId = gameId2 }, new Game { GameId = gameId3 } })
+                .Create();
+
+            _usersRepositoryMock.Setup(x => x.GetById(userId1)).Returns(user1);
+            _usersRepositoryMock.Setup(x => x.GetById(userId2)).Returns(user2);
+
+            // Act
+            var actual = _sut.CompareFavorite(userId1, comparision);
+
+            // Assert
+            Assert.True(actual.GetDataOnSuccess().Games.Count() == 1);
+        }
+
+        [Fact]
+        public void CompareFavorite_Should_return_the_difference_if_comparision_is_difference()
+        {
+            // Arrange
+            Fixture fix = new Fixture();
+
+
+            int userId1 = fix.Create<int>();
+            int userId2 = fix.Create<int>();
+            int gameId1 = fix.Create<int>();
+            int gameId2 = fix.Create<int>();
+            int gameId3 = fix.Create<int>();
+
+            ComparisonRequest comparision = fix.Build<ComparisonRequest>()
+                .With(x => x.Comparison, "intersection")
+                .With(x => x.OtherUserId, userId2)
+                .Create();
+
+            User? user1 = fix.Build<User>()
+                .With(x => x.UserId, userId1)
+                .With(x => x.Games, new HashSet<Game> { new Game { GameId = gameId1 }, new Game { GameId = gameId2 } })
+                .Create();
+            User? user2 = fix.Build<User>()
+                .With(x => x.UserId, userId2)
+                .With(x => x.Games, new HashSet<Game> { new Game { GameId = gameId2 }, new Game { GameId = gameId3 } })
+                .Create();
+
+            _usersRepositoryMock.Setup(x => x.GetById(userId1)).Returns(user1);
+            _usersRepositoryMock.Setup(x => x.GetById(userId2)).Returns(user2);
+
+            // Act
+            var actual = _sut.CompareFavorite(userId1, comparision);
+
+            // Assert
+            Assert.True(actual.GetDataOnSuccess().Games.Count() == 1);
         }
 
     }
