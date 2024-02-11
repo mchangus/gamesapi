@@ -4,6 +4,7 @@ using Games.Services;
 using GamesApi.Domain.Constants;
 using GamesApi.Rawg.Services;
 using GamesApi.UsersRepository;
+using GamesApi.WebApi.Middleware;
 using Polly;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory());
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: false, reloadOnChange: true);
+
+// Add logging to the builder
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 
 // Add services to the container.
 
@@ -44,6 +50,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseMiddleware<ExceptionLoggingMiddleware>();
 }
 
 app.UseHttpsRedirection();
