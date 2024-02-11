@@ -53,19 +53,14 @@ namespace Games.Api.Controllers
             {
                 return resultWithData.ResponseCode switch
                 {
-                    StatusCodes.Status400BadRequest => BadRequest(),
-                    StatusCodes.Status404NotFound => NotFound(),
-                    StatusCodes.Status409Conflict => Conflict(),
+                    StatusCodes.Status400BadRequest => BadRequest(resultWithData.Message),
+                    StatusCodes.Status404NotFound => NotFound(resultWithData.Message),
+                    StatusCodes.Status409Conflict => Conflict(resultWithData.Message),
                     _ => BadRequest(),
                 };
             }
 
             return NoContent();
-
-
-            //TODO: Possibly create a new result to know if the game is not there return 400
-            // if user not there return 404
-            // if game already added return 409
 
         }
 
@@ -81,9 +76,9 @@ namespace Games.Api.Controllers
             {
                 return resultWithData.ResponseCode switch
                 {
-                    StatusCodes.Status400BadRequest => BadRequest(),
-                    StatusCodes.Status404NotFound => NotFound(),
-                    StatusCodes.Status409Conflict => Conflict(),
+                    StatusCodes.Status400BadRequest => BadRequest(resultWithData.Message),
+                    StatusCodes.Status404NotFound => NotFound(resultWithData.Message),
+                    StatusCodes.Status409Conflict => Conflict(resultWithData.Message),
                     _ => BadRequest(),
                 };
             }
@@ -92,15 +87,24 @@ namespace Games.Api.Controllers
         }
 
         [HttpPost]
-        [Route("{userId}/comparison/")]
+        [Route("{userId}/comparison")]
         [ProducesResponseType(statusCode: StatusCodes.Status200OK, Type = typeof(ComparisonResponse))]
-        public void CompareFavorite([FromRoute] int userId, [FromBody] ComparisonRequest comparison)
+        public IActionResult CompareFavorite([FromRoute] int userId, [FromBody] ComparisonRequest comparison)
         {
-            //TODO:
-       /*     Return a `400 Bad Request` response if a user matching `otherUserId` (in the request body) does not exist or if `comparison` (in the request body) is invalid.
+            ResultWithData<ComparisonResponse> resultWithData = _usersService.CompareFavorite(userId, comparison);
 
-              Return a `404 Not Found` response if a user matching `userId` (in the URL) does not exist.*/
+            if (!resultWithData.Succeeded)
+            {
+                return resultWithData.ResponseCode switch
+                {
+                    StatusCodes.Status400BadRequest => BadRequest(resultWithData.Message),
+                    StatusCodes.Status404NotFound => NotFound(resultWithData.Message),
+                    StatusCodes.Status409Conflict => Conflict(resultWithData.Message),
+                    _ => BadRequest(),
+                };
+            }
 
+            return Ok(resultWithData.GetDataOnSuccess());
         }
 
     }

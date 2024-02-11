@@ -2,8 +2,8 @@
 {
     public enum Comparison
     {
-        Union,
-        Intersection,
-        Difference
+        UNION,
+        INTERSECTION,
+        DIFFERENCE
     }
 }

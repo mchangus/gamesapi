@@ -1,4 +1,3 @@
-using AutoMapper;
 using Games.Domain.Models;
 using Games.Services;
 using Games.Services.Abstracts;

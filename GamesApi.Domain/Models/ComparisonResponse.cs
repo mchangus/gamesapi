@@ -10,6 +10,6 @@ namespace Games.Domain.Models
         public int UserId { get; set; }
 
         [JsonProperty("games")]
-        public List<Game> Games { get; set; }
+        public IEnumerable<Game> Games { get; set; }
     }
 }

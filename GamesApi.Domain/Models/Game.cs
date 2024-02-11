@@ -1,5 +1,4 @@
-﻿
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Games.Core.Models
 {
@@ -30,5 +29,16 @@ namespace Games.Core.Models
         [JsonPropertyName("updated")]
         public DateTime? Updated { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is not Game other) return false;
+
+            return other.GameId == GameId;
+        }
+
+        public override int GetHashCode()
+        {
+            return GameId.GetHashCode();
+        }
     }
 }
