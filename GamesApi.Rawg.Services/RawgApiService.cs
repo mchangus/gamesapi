@@ -7,6 +7,7 @@ using GamesApi.Rawg.Services.Models;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Web;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 
 namespace GamesApi.Rawg.Services
 {
@@ -58,7 +59,7 @@ namespace GamesApi.Rawg.Services
 
             var httpClient = _httpClientFactory.CreateClient(SettingsContants.RawgHttClientName);
 
-            var url = $"{_rawgSettings.BaseUrl}api/games/{gameId}";
+            var url = $"{_rawgSettings.BaseUrl}api/games/{gameId}?key={_rawgSettings.RawgApiKey}";
 
             HttpResponseMessage response = await httpClient.GetAsync(new Uri(url));
 

@@ -10,10 +10,7 @@ namespace GamesApi.UsersRepository
     {
         public UsersRepository()
         {
-            if (UserData.UserDatabase is null)
-            {
-                UserData.UserDatabase = new HashSet<User>();
-            }
+            UserData.UserDatabase ??= new HashSet<User>();
         }
         /// <inheritdoc cref="IUsersRepository.Create"/>
         public User Create()
@@ -25,7 +22,7 @@ namespace GamesApi.UsersRepository
             }
             else
             {
-                user.UserId =  ++UserData.UserDatabase.Last().UserId;
+                user.UserId =  UserData.UserDatabase.Last().UserId + 1;
             }
 
             UserData.UserDatabase.Add(user);
@@ -37,6 +34,13 @@ namespace GamesApi.UsersRepository
         public User? GetById(int userId)
         {
             return UserData.UserDatabase.FirstOrDefault(x => x.UserId == userId);
+        }
+
+        public void UpdateUser(User user)
+        {
+            UserData.UserDatabase.RemoveWhere(x => x.UserId == user.UserId);
+
+            UserData.UserDatabase.Add(user);
         }
     }
 }

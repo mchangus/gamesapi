@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamesApi.Rawg.Services", "G
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{AA4A2C8A-8AA9-4E86-8854-197C8844D277}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamesApi.UsersRepository", "GamesApi.UsersRepository\GamesApi.UsersRepository.csproj", "{B3CDC427-83E9-422B-BDEC-AD74BF05405F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamesApi.InMemory.UsersRepository", "GamesApi.UsersRepository\GamesApi.InMemory.UsersRepository.csproj", "{B3CDC427-83E9-422B-BDEC-AD74BF05405F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamesApi.UsersRepository.Abstracts", "..\GamesApi.UsersRepository.Abstracts\GamesApi.UsersRepository.Abstracts.csproj", "{F0EBA867-B072-43AE-98FA-1F648DE7137A}"
 EndProject

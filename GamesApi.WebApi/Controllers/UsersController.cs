@@ -1,6 +1,8 @@
 using Games.Core.Models;
 using Games.Domain.Models;
 using Games.Services.Abstracts;
+using GamesApi.Domain.Models.Requests;
+using GamesApi.Domain.Models.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Games.Api.Controllers
@@ -37,13 +39,30 @@ namespace Games.Api.Controllers
         {
             User user = _usersService.Create();
 
-            return Ok(user);
+            return new CreatedResult("/users",user);
         }
 
         [HttpPost]
+        [Route("{userId}/games")]
         [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
-        public void AddGameToFavorite([FromBody] int gameId)
+        public async Task<IActionResult> AddGameToFavorite([FromRoute] int userId, [FromBody] AddFavoriteRequestBody body)
         {
+            ResultWithData<User> resultWithData = await _usersService.AddGameToFavoriteAsync(userId, body.GameId);
+            
+            if (!resultWithData.Succeeded) 
+            {
+                return resultWithData.ResponseCode switch
+                {
+                    StatusCodes.Status400BadRequest => BadRequest(),
+                    StatusCodes.Status404NotFound => NotFound(),
+                    StatusCodes.Status409Conflict => Conflict(),
+                    _ => BadRequest(),
+                };
+            }
+
+            return NoContent();
+
+
             //TODO: Possibly create a new result to know if the game is not there return 400
             // if user not there return 404
             // if game already added return 409
@@ -53,13 +72,27 @@ namespace Games.Api.Controllers
         [HttpDelete]
         [Route("{userId}/games/{gameId}")]
         [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
-        public void RemoveGameFromFavorite([FromRoute] int userId, int gameId)
+        public IActionResult RemoveGameFromFavorite([FromRoute] int userId, int gameId)
         {
-            //TODO
+
+            ResultWithData<User> resultWithData = _usersService.RemoveGameFromFavorite(userId, gameId);
+
+            if (!resultWithData.Succeeded)
+            {
+                return resultWithData.ResponseCode switch
+                {
+                    StatusCodes.Status400BadRequest => BadRequest(),
+                    StatusCodes.Status404NotFound => NotFound(),
+                    StatusCodes.Status409Conflict => Conflict(),
+                    _ => BadRequest(),
+                };
+            }
+
+            return NoContent();
         }
 
         [HttpPost]
-        [Route("{userId}/comparison")]
+        [Route("{userId}/comparison/")]
         [ProducesResponseType(statusCode: StatusCodes.Status200OK, Type = typeof(ComparisonResponse))]
         public void CompareFavorite([FromRoute] int userId, [FromBody] ComparisonRequest comparison)
         {

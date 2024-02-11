@@ -19,7 +19,7 @@
     <ProjectReference Include="..\GamesApi.Rawg.Services\GamesApi.Rawg.Services.csproj" />
     <ProjectReference Include="..\GamesApi.Services.Abstracts\GamesApi.Services.Abstracts.csproj" />
     <ProjectReference Include="..\GamesApi.Services\GamesApi.Services.csproj" />
-    <ProjectReference Include="..\GamesApi.UsersRepository\GamesApi.UsersRepository.csproj" />
+    <ProjectReference Include="..\GamesApi.UsersRepository\GamesApi.InMemory.UsersRepository.csproj" />
   </ItemGroup>
 
 </Project>
