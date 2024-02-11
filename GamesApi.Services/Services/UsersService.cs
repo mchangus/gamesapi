@@ -56,6 +56,29 @@ namespace Games.Services
             return ResultWithData<User>.Success(user);
         }
 
+        /// <inheritdoc cref="IUsersService.RemoveGameFromFavorite(int, int)"/>
+        public ResultWithData<User> RemoveGameFromFavorite(int userId, int gameId)
+        {
+            User? user = _usersRepository.GetById(userId);
+
+            if (user is null)
+            {
+                return ResultWithData<User>.Failure($"User with Id {userId} does not exist.", StatusCodes.Status400BadRequest);
+            }
+
+            if (!user.Games.Any(x => x.GameId == gameId))
+            {
+                return ResultWithData<User>.Failure($"Game with Id {gameId} was not found in favorites.", StatusCodes.Status404NotFound);
+            }
+
+            user.Games.RemoveWhere(x => x.GameId == gameId);
+
+            _usersRepository.UpdateUser(user);
+
+            return ResultWithData<User>.Success(user);
+
+        }
+
         /// <inheritdoc cref="IUsersService.CompareFavorite(int, ComparisonRequest)"/>
         public ResultWithData<ComparisonResponse> CompareFavorite(int userId, ComparisonRequest comparison)
         {
@@ -115,30 +138,6 @@ namespace Games.Services
         {
             return _usersRepository.GetById(userId);
         }
-
-        /// <inheritdoc cref="IUsersService.RemoveGameFromFavorite(int, int)"/>
-        public ResultWithData<User> RemoveGameFromFavorite(int userId, int gameId)
-        {
-            User? user = _usersRepository.GetById(userId);
-
-            if (user is null)
-            {
-                return ResultWithData<User>.Failure($"User with Id {userId} does not exist.", StatusCodes.Status400BadRequest);
-            }
-
-            if (!user.Games.Any(x => x.GameId == gameId))
-            {
-                return ResultWithData<User>.Failure($"Game with Id {gameId} was not found in favorites.", StatusCodes.Status404NotFound);
-            }
-
-            user.Games.RemoveWhere(x => x.GameId == gameId);
-
-            _usersRepository.UpdateUser(user);
-
-            return ResultWithData<User>.Success(user);
-
-        }
-
 
         private IEnumerable<Game> FavoritesUnion(User primaryUser, User secondaryUser)
         {
