@@ -22,3 +22,5 @@
 /GamesApi.UsersRepository/bin/Debug/net6.0
 /GamesApi.UsersRepository/obj
 /.vs/ProjectEvaluation
+/GamesApi.UsersRepository.Abstracts/bin/Debug/net6.0
+/GamesApi.UsersRepository.Abstracts/obj

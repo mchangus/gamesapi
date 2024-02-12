@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\GamesApi.UsersRepository.Abstracts\GamesApi.UsersRepository.Abstracts.csproj" />
+    <ProjectReference Include="..\GamesApi.UsersRepository.Abstracts\GamesApi.UsersRepository.Abstracts.csproj" />
   </ItemGroup>
 
 </Project>
