@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -19,6 +19,7 @@
     <ProjectReference Include="..\GamesApi.Rawg.Services\GamesApi.Rawg.Services.csproj" />
     <ProjectReference Include="..\GamesApi.Services.Abstracts\GamesApi.Services.Abstracts.csproj" />
     <ProjectReference Include="..\GamesApi.Services\GamesApi.Services.csproj" />
+    <ProjectReference Include="..\GamesApi.UsersRepository.Abstracts\GamesApi.UsersRepository.Abstracts.csproj" />
     <ProjectReference Include="..\GamesApi.UsersRepository\GamesApi.InMemory.UsersRepository.csproj" />
   </ItemGroup>
 
