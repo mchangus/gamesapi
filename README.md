@@ -10,7 +10,7 @@ In order to run the web application you can download the repo and run it in Micr
  1. Generate a free RAWG API key https://rawg.io/apidocs
  2.  Add a new settings file named "appsettings.Development.json" with the follwing setting:
     {"RAWGSettings": {"RawgApiKey": "<key>" }}
- 4. Run the Application, SwaggerUI will open on the browser.
+ 4. Run the Application, SwaggerUI will open on the browser where you can review the endpoints usage.
  5. Use SwaggerUI, PostMan or other rest client to call endpoints.
 
  
