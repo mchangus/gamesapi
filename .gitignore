@@ -24,3 +24,15 @@
 /.vs/ProjectEvaluation
 /GamesApi.UsersRepository.Abstracts/bin/Debug/net6.0
 /GamesApi.UsersRepository.Abstracts/obj
+/GamesApi.WebApi/appsettings.Local.json
+/GamesApi.Domain/bin/Release/net6.0
+/GamesApi.Rawg.Services/bin/Release/net6.0
+/GamesApi.Rawg.Services.Abstracts/bin/Release/net6.0
+/GamesApi.Services/bin/Release/net6.0
+/GamesApi.Services.Abstracts/bin/Release/net6.0
+/GamesApi.Tests/bin/Release/net6.0
+/GamesApi.UsersRepository/bin/Release/net6.0
+/GamesApi.UsersRepository.Abstracts/bin/Release/net6.0
+/GamesApi.WebApi/bin/Release/net6.0
+/GamesApi.WebApi/Properties/PublishProfiles
+/GamesApi.WebApi/GamesApi.WebApi.csproj.user

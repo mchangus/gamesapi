@@ -1,9 +1,9 @@
-using AutoMapper;
 using Games.Domain.Models.Configuration;
 using Games.Services;
 using GamesApi.Domain.Constants;
 using GamesApi.Rawg.Services;
 using GamesApi.UsersRepository;
+using GamesApi.WebApi.Middlewares;
 using Polly;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,6 +51,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler("/error");
+app.UseExceptionHandlingMiddleware();
+
 
 app.UseHttpsRedirection();
 

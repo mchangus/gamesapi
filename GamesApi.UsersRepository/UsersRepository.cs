@@ -7,25 +7,22 @@ namespace GamesApi.UsersRepository
     /// The user repository class
     /// </summary>
     public class UsersRepository : IUsersRepository
-    {
+    {        
         public UsersRepository()
         {
-            UserData.UserDatabase ??= new HashSet<User>();
+            UserData.UserDatabase ??= new System.Collections.Concurrent.ConcurrentDictionary<int, User>();
+
         }
         /// <inheritdoc cref="IUsersRepository.Create"/>
         public User Create()
         {            
-            User user = new();
-            if (!UserData.UserDatabase.Any())
-            {
-                user.UserId = 1;
-            }
-            else
-            {
-                user.UserId =  UserData.UserDatabase.Last().UserId + 1;
-            }
+            User user = UserData.UserDatabase.Any()
+                        ? UserData.UserDatabase.Last().Value.CloneEmpty()
+                        : new User();
 
-            UserData.UserDatabase.Add(user);
+            user.Increment();
+
+            UserData.UserDatabase.TryAdd(user.UserId, user);
 
             return user;
         }
@@ -33,14 +30,12 @@ namespace GamesApi.UsersRepository
         /// <inheritdoc cref="IUsersRepository.GetById"/>
         public User? GetById(int userId)
         {
-            return UserData.UserDatabase.FirstOrDefault(x => x.UserId == userId);
+            return UserData.UserDatabase.FirstOrDefault(x => x.Key == userId).Value;
         }
 
         public void UpdateUser(User user)
         {
-            UserData.UserDatabase.RemoveWhere(x => x.UserId == user.UserId);
-
-            UserData.UserDatabase.Add(user);
+            UserData.UserDatabase.TryUpdate(user.UserId, user, user);
         }
     }
 }

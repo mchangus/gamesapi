@@ -1,10 +1,10 @@
 ﻿using Games.Core.Models;
+using System.Collections.Concurrent;
 
 namespace GamesApi.UsersRepository
 {
     public static class UserData
     {
-        //TODO: Check if List is better HashSet or List for the operations we are doing
-        public static HashSet<User> UserDatabase { get; set; } = default!;
+        public static ConcurrentDictionary<int, User> UserDatabase { get; set; } = default!;
     }
 }
