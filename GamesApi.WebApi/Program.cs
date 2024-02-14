@@ -28,7 +28,7 @@ var baseurl = builder.Configuration.GetValue<string>("RAWGSettings:BaseUrl");
 
 builder.Services.AddHttpClient(SettingsContants.RawgHttClientName, client =>
 {
-    client.BaseAddress = new Uri($"https://{baseurl}");
+    client.BaseAddress = new Uri($"{baseurl}");
 })
     .AddTransientHttpErrorPolicy(p =>
       p.WaitAndRetryAsync(
