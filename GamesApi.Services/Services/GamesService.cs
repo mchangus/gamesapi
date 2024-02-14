@@ -15,20 +15,8 @@ namespace Games.Services
         {
             _rawgApiService = rawgApiService;
         }
-        public async Task AddGameToFavoritesAsync(int userId, int gameId)
-        {
-            throw new NotImplementedException();
-        }
 
-        public async Task<ComparisonResponse> CompareFavoritesAsync(int userId, ComparisonRequest comparisonRequest)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task RemoveGameFromFavoritesAsync(int userId, int gameId)
-        {
-            throw new NotImplementedException();
-        }
+        /// <inheritdoc cref="IGamesService.SearchAsync(int, int)"/>
 
         public async Task<IEnumerable<Game>> SearchAsync(Search search)
         {
